@@ -1,0 +1,91 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: string;
+}
+const { title, description = "Gabriel Laet — projects and essays.", lang = "en" } = Astro.props;
+const fullTitle = title ? `${title} · Gabriel Laet` : "Gabriel Laet";
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <a href="/">gabriel-laet.com</a>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #f6f4ef;
+    --fg: #1b1f22;
+    --muted: #5f686d;
+    --rule: #d9d4ca;
+    --accent: #b86e00;
+    --serif: "Newsreader", Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1316;
+      --fg: #ece8e1;
+      --muted: #a3adb2;
+      --rule: #2a3439;
+      --accent: #f5a524;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); color: var(--fg); }
+  body {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  main, footer { max-width: 38rem; margin: 0 auto; padding: 0 20px; }
+  main { padding-top: 12vh; padding-bottom: 4rem; }
+  footer {
+    padding-bottom: 3rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  a { color: inherit; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--accent); }
+  h1 { font-weight: 500; font-size: 2.2rem; line-height: 1.15; margin: 0 0 1.25rem; letter-spacing: -0.01em; }
+  h2 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 3.5rem 0 1rem;
+  }
+  .muted { color: var(--muted); }
+  .mono { font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; }
+</style>

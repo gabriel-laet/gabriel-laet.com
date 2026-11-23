@@ -1,0 +1,21 @@
+// gabriel-laet.com: a static-assets Worker that owns the domain (custom domains,
+// so Cloudflare manages DNS + certificates). Project Workers sit on more
+// specific routes, e.g. rios-invisiveis on gabriel-laet.com/p/rios-invisiveis*,
+// and take precedence there.
+// Deploy: pnpm deploy
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "gabriel-laet-site",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "gabriel-laet.com", "custom_domain": true },
+    { "pattern": "www.gabriel-laet.com", "custom_domain": true }
+  ],
+  "workers_dev": false,
+  "preview_urls": false
+}
